@@ -148,9 +148,7 @@
 <a class="hidden md:block text-sm font-semibold tracking-wide hover:text-primary transition-colors text-deep-forest dark:text-white" href="#nosotros">NOSOTROS</a>
 <a class="text-xl md:text-2xl font-bold tracking-tight font-serif uppercase text-deep-forest dark:text-white drop-shadow-sm" href="#">Villa Laura</a>
 <a class="hidden md:block text-sm font-semibold tracking-wide hover:text-primary transition-colors text-deep-forest dark:text-white" href="#servicios">SERVICIOS</a>
-<a class="bg-primary/90 hover:bg-primary text-white text-xs md:text-sm font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:scale-105 shadow-lg backdrop-blur-sm border border-white/20" href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20reservar%20en%20Villa%20Laura" target="_blank">
-            RESERVAR
-        </a>
+<a class="bg-primary/90 hover:bg-primary text-white text-xs md:text-sm font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:scale-105 shadow-lg backdrop-blur-sm border border-white/20" href="#contacto">RESERVAR</a>
 </div>
 </nav>
 <header class="relative h-screen w-full flex items-center justify-center overflow-hidden" id="inicio">
@@ -292,24 +290,40 @@
 <div class="relative w-full aspect-[3/4] md:aspect-video rounded-3xl overflow-hidden bg-black group border border-white/10 shadow-2xl" id="tour-container">
     <iframe id="vr-tour-iframe" class="absolute inset-0 w-full h-full z-0" src="https://tour.panoee.net/697950dfe479ca135fc79bc1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-    <div id="tour-curtain" class="absolute inset-0 z-10 flex items-center justify-center cursor-pointer transition-all duration-1000 bg-black/20 backdrop-blur-[6px] hover:backdrop-blur-[3px] hover:bg-black/10" onclick="hideCurtain()">
+    <div id="tour-curtain" class="absolute inset-0 z-10 flex items-center justify-center cursor-pointer transition-all duration-1000 bg-black/20 backdrop-blur-[6px] hover:backdrop-blur-[3px] hover:bg-black/10" onclick="startExperience()">
         <div class="group/btn relative flex flex-col items-center gap-4 transition-all duration-300 group-hover:scale-105">
             <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/20 backdrop-blur-md flex items-center justify-center group-hover/btn:bg-primary group-hover/btn:border-primary transition-all duration-300 shadow-2xl glass-panel">
                 <span class="material-symbols-outlined text-4xl text-white transition-colors">360</span>
             </div>
-            <span class="glass-panel px-6 py-2 rounded-full text-white font-bold text-lg tracking-wide uppercase transition-all shadow-lg border border-white/20">Entrar al Recorrido</span>
+            <span class="glass-panel px-6 py-2 rounded-full text-white font-bold text-lg tracking-wide uppercase transition-all shadow-lg border border-white/20">¡Iniciar Tour 360!</span>
         </div>
+    </div>
+
+    <div id="tour-cta" class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-20 opacity-0 translate-y-4 pointer-events-none transition-all duration-1000 ease-out">
+        <a href="https://wa.me/1234567890?text=Hola,%20acabo%20de%20ver%20el%20recorrido%20360%20y%20quiero%20reservar" target="_blank" class="bg-primary/95 hover:bg-primary text-white font-display font-bold px-6 py-2.5 md:px-10 md:py-4 text-sm md:text-base rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.3)] backdrop-blur-md border border-white/20 flex items-center justify-center gap-2 hover:scale-105 transition-all active:scale-95 whitespace-nowrap">
+            <span class="material-symbols-outlined text-lg md:text-xl">calendar_month</span>
+            ¡RESERVAR AHORA!
+        </a>
     </div>
 </div>
 
 <script>
-    function hideCurtain() {
+    function startExperience() {
         const curtain = document.getElementById('tour-curtain');
-        // Desvanecimiento premium tipo Apple
+        const cta = document.getElementById('tour-cta');
+
+        // 1. Desvanecemos la cortina
         curtain.style.opacity = '0';
         setTimeout(() => {
             curtain.classList.add('hidden');
         }, 1000);
+
+        // 2. Iniciamos el contador invisible de 10 segundos
+        setTimeout(() => {
+            // 3. Aparece el CTA con efecto suave
+            cta.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            cta.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        }, 10000); // 10000 milisegundos = 10 segundos
     }
 </script>
 <div class="flex justify-center mt-8">
@@ -412,9 +426,9 @@
 <div class="border-t border-gray-200 dark:border-white/10 pt-6">
 <p class="text-xs text-deep-forest/50 dark:text-white/50 mb-1">Precio por persona</p>
 <p class="text-3xl font-bold text-primary mb-6">$35.000 <span class="text-sm font-normal text-deep-forest/60 dark:text-white/60">COP</span></p>
-<a class="block w-full py-4 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-sm font-bold uppercase transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-[1.02]" href="https://wa.me/1234567890?text=Hola,%20quisiera%20reservar%20un%20Pasadía" target="_blank">
-                        Reservar Pasadía
-                    </a>
+<a class="block w-full py-4 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-sm font-bold uppercase transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-[1.02]" href="#contacto">
+    Reservar Pasadía
+</a>
 </div>
 </div>
 <div class="glass-panel-dark text-white p-8 rounded-3xl relative transform md:-translate-y-6 shadow-2xl flex flex-col h-full ring-4 ring-primary/20 backdrop-blur-2xl bg-gradient-to-br from-[#1A3318]/95 to-[#0f221c]/95">
@@ -445,9 +459,9 @@
 <div class="border-t border-white/20 pt-6">
 <p class="text-xs text-white/50 mb-1">Precio por persona</p>
 <p class="text-3xl font-bold mb-6 text-white text-shadow">$70.000 <span class="text-sm font-normal text-white/60">COP</span></p>
-<a class="block w-full py-4 text-center bg-white text-deep-forest rounded-full text-sm font-bold uppercase hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] transform" href="https://wa.me/1234567890?text=Hola,%20quisiera%20reservar%20una%20Estadía" target="_blank">
-                        Reservar Ahora
-                    </a>
+<a class="block w-full py-4 text-center bg-white text-deep-forest rounded-full text-sm font-bold uppercase hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] transform" href="#contacto">
+    Reservar Ahora
+</a>
 </div>
 </div>
 <div class="premium-card p-8 rounded-3xl flex flex-col hover:border-primary/50 transition-all duration-300 h-full border border-transparent">
@@ -473,9 +487,9 @@
 <div class="border-t border-gray-200 dark:border-white/10 pt-6">
 <p class="text-xs text-deep-forest/50 dark:text-white/50 mb-1">Presupuesto</p>
 <p class="text-xl font-bold text-deep-forest dark:text-white mb-6">Cotización <span class="text-sm font-normal text-deep-forest/60 dark:text-white/60">a medida</span></p>
-<a class="block w-full py-4 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-sm font-bold uppercase transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-[1.02]" href="https://wa.me/1234567890?text=Hola,%20quisiera%20cotizar%20un%20Evento" target="_blank">
-                        Cotizar Evento
-                    </a>
+<a class="block w-full py-4 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-sm font-bold uppercase transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-[1.02]" href="#contacto">
+    Cotizar Evento
+</a>
 </div>
 </div>
 </div>
@@ -493,45 +507,85 @@
 <p class="text-white/90 text-lg">No dejes pasar la oportunidad de vivir una experiencia única. Escríbenos y asegura tu espacio en Villa Laura.</p>
 </div>
 </div>
-<form action="https://wa.me/1234567890" class="glass-panel p-6 md:p-12 rounded-[2.5rem] shadow-2xl backdrop-blur-xl border-t border-white/20" method="get" target="_blank">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8">
-<div class="space-y-2">
-<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Tu Nombre</label>
-<input class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" name="text" placeholder="e.g. María González" type="text"/>
-</div>
-<div class="space-y-2">
-<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Tu Contacto</label>
-<input class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" placeholder="Teléfono o Email" type="text"/>
-</div>
-<div class="space-y-2">
-<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Fecha deseada</label>
-<input class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" type="date"/>
-</div>
-<div class="space-y-2">
-<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Interés</label>
-<div class="relative">
-<select class="w-full appearance-none bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none [&amp;&gt;option]:text-black">
-<option value="">Selecciona tu plan</option>
-<option value="pasadia">Pasadía ($35.000 COP)</option>
-<option value="estadia">Estadía ($70.000 COP)</option>
-<option value="evento">Evento Especial</option>
-</select>
-<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white">
-<span class="material-symbols-outlined">expand_more</span>
-</div>
-</div>
-</div>
-</div>
-<div class="space-y-2 mb-8 md:mb-12">
-<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Detalles adicionales</label>
-<textarea class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none resize-none" placeholder="Cuéntanos cuántas personas vienen o si tienes alguna duda..." rows="3"></textarea>
-</div>
-<div class="flex justify-center">
-<button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-primary/50 w-full md:w-auto text-lg tracking-wide border border-white/10 flex items-center justify-center gap-2" type="submit">
-<span class="material-symbols-outlined">send</span> ENVIAR A WHATSAPP
-                </button>
-</div>
+<form id="reservaForm" class="glass-panel p-6 md:p-12 rounded-[2.5rem] shadow-2xl backdrop-blur-xl border-t border-white/20" onsubmit="enviarReservaWhatsApp(event)">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8">
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Tu Nombre *</label>
+            <input id="nombre" required class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" placeholder="e.g. María González" type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Tu Contacto *</label>
+            <input id="contacto_tel" required class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" placeholder="Teléfono o Email" type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Fecha deseada *</label>
+            <input id="fecha" required class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" type="date"/>
+        </div>
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Cantidad de personas *</label>
+            <input id="personas" required min="1" class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" placeholder="¿Cuántos vienen?" type="number"/>
+        </div>
+        <div class="space-y-2 md:col-span-2">
+            <label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Interés *</label>
+            <div class="relative">
+                <select id="interes" required class="w-full appearance-none bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none [&>option]:text-black">
+                    <option value="">Selecciona tu plan</option>
+                    <option value="Pasadía">Pasadía ($35.000 COP)</option>
+                    <option value="Estadía">Estadía ($70.000 COP)</option>
+                    <option value="Evento Especial">Evento Especial</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white">
+                    <span class="material-symbols-outlined">expand_more</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space-y-2 mb-8 md:mb-12">
+        <label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Detalles adicionales (Opcional)</label>
+        <textarea id="detalles" class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none resize-none" placeholder="Cuéntanos si tienes alguna duda..." rows="3"></textarea>
+    </div>
+    <div class="flex justify-center">
+        <button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-primary/50 w-full md:w-auto text-lg tracking-wide border border-white/10 flex items-center justify-center gap-2" type="submit">
+            <span class="material-symbols-outlined">send</span> ENVIAR A WHATSAPP
+        </button>
+    </div>
 </form>
+
+<script>
+function enviarReservaWhatsApp(event) {
+    event.preventDefault();
+
+    // 1. Obtener valores
+    const nombre = document.getElementById('nombre').value.trim();
+    const contacto = document.getElementById('contacto_tel').value.trim();
+    const fecha = document.getElementById('fecha').value;
+    const personas = document.getElementById('personas').value;
+    const interes = document.getElementById('interes').value;
+    const detalles = document.getElementById('detalles').value.trim();
+
+    // 2. Validación estricta
+    if (!nombre || !contacto || !fecha || !personas || !interes) {
+        alert("¡Atención! Todos los campos marcados con * son obligatorios.");
+        return;
+    }
+
+    // 3. Estructurar el mensaje
+    let mensaje = `Hola, mi nombre es *${nombre}*.%0A%0A`;
+    mensaje += `Quiero reservar para el día *${fecha}*.%0A%0A`;
+    mensaje += `Somos *${personas}* personas.%0A%0A`;
+    mensaje += `Estoy interesado en el servicio de *${interes}*.%0A`;
+    
+    if (detalles) {
+        mensaje += `%0ADetalles adicionales: ${detalles}`;
+    }
+
+    // 4. Enlace de WhatsApp (Reemplaza 1234567890 por el número real)
+    const whatsappUrl = `https://wa.me/1234567890?text=${mensaje}`;
+    
+    // 5. Redirección
+    window.open(whatsappUrl, '_blank');
+}
+</script>
 </div>
 </section>
 <footer class="bg-gradient-to-t from-[#050f0c] to-[#10221c] text-white pt-16 pb-8 px-6 border-t border-white/5 relative z-10">
