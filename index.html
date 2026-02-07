@@ -1,430 +1,575 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Villa Laura | Tu escape campestre en Sabana Grande</title>
-    
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Villa Laura - Experiencia Premium y Reserva</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
         tailwind.config = {
+            darkMode: "class",
             theme: {
-                extend: {
-                    colors: {
-                        primary: '#2D5A27', // Verde Campestre Premium
-                        accent: '#8B5E3C',  // Tierra / Madera
-                        bgLuxury: '#F9F8F5',
-                        textDark: '#1A1C19',
-                        muted: '#7A7D77',
-                    },
-                    fontFamily: {
-                        display: ['Playfair Display', 'serif'],
-                        body: ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'breathe': 'breathe 10s ease-in-out infinite',
-                        'infinite-scroll': 'infinite-scroll 25s linear infinite',
-                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
-                    },
-                    keyframes: {
-                        breathe: {
-                            '0%, 100%': { transform: 'scale(1)' },
-                            '50%': { transform: 'scale(1.08)' },
-                        },
-                        'infinite-scroll': {
-                            from: { transform: 'translateX(0)' },
-                            to: { transform: 'translateX(-50%)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+            extend: {
+                colors: {
+                    "primary": "#0fbd83",
+                    "background-light": "#f6f8f7",
+                    "background-dark": "#10221c",
+                    "deep-forest": "#1A3318",
+                    "champagne": "#D1C4A9",
+                },
+                fontFamily: {
+                    "display": ["Manrope", "sans-serif"],
+                    "serif": ["Playfair Display", "serif"],
+                },
+                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                animation: {
+                    'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                },
+                keyframes: {
+                    fadeInUp: {
+                        '0%': { opacity: '0', transform: 'translateY(20px)' },
+                        '100%': { opacity: '1', transform: 'translateY(0)' },
                     }
                 }
+            },
+            },
+        }
+    </script>
+<style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .text-shadow {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        .glass-panel-dark {
+            background: rgba(16, 34, 28, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        .glass-button {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .premium-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        }
+        .dark .premium-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .amenity-item {
+            display: flex;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+        .whatsapp-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #25D366;
+            opacity: 0.6;
+            z-index: -1;
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .bg-gradient-premium-light {
+            background: linear-gradient(135deg, #f6f8f7 0%, #e8f5e9 100%);
+        }
+        .bg-gradient-premium-dark {
+            background: linear-gradient(135deg, #10221c 0%, #1A3318 100%);
+        }
+        @media (max-width: 768px) {
+            .amenity-item:nth-child(n+5) {
+                display: none;
+            }
+            #show-more-amenities:checked ~ .grid .amenity-item:nth-child(n+5) {
+                display: flex;
+            }
+            #show-more-amenities:checked ~ label .show-text {
+                display: none;
+            }
+            #show-more-amenities:checked ~ label .hide-text {
+                display: inline;
+            }
+             #show-more-amenities:not(:checked) ~ label .hide-text {
+                display: none;
+            }
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
             }
         }
-    </script>
-
-    <style type="text/css">
-        :root {
-            --primary: #2D5A27;
-            --accent: #8B5E3C;
+        @media (min-width: 769px) {
+            .amenity-item:nth-child(n+5) {
+                display: flex !important;
+            }
+            .mobile-toggle-btn {
+                display: none !important;
+            }
         }
-
-        .glass-header {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(0px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .header-shrink {
-            background: rgba(249, 248, 245, 0.95);
-            backdrop-filter: blur(12px);
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-            box-shadow: 0 10px 30px -10px rgba(45, 90, 39, 0.1);
-            border-bottom: 1px solid rgba(45, 90, 39, 0.1);
-        }
-
-        .header-shrink .nav-link { color: #1A1C19; }
-        .header-shrink .logo-text { color: #2D5A27; }
-
-        .btn-luxury {
-            background: linear-gradient(135deg, var(--primary) 0%, #3d7a35 100%);
-            transition: all 0.3s ease;
-        }
-
-        .btn-luxury:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -10px rgba(45, 90, 39, 0.4);
-        }
-
-        .tour-curtain {
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-
-        .tour-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F9F8F5; }
-        ::-webkit-scrollbar-thumb { background: #2D5A27; border-radius: 10px; }
     </style>
 </head>
-
-<body class="bg-bgLuxury font-body text-textDark overflow-x-hidden">
-
-    <!-- Header -->
-    <header id="main-nav" class="fixed top-0 left-0 w-full z-50 glass-header py-6">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="#inicio" class="flex items-center gap-2">
-                <span class="logo-text font-display text-2xl font-bold text-white transition-colors duration-300 tracking-tight">VILLA LAURA</span>
-            </a>
-
-            <nav class="hidden md:flex items-center gap-8">
-                <a href="#tour" class="nav-link text-white/80 hover:text-white transition-colors text-xs uppercase tracking-widest font-bold">El Lugar (360°)</a>
-                <a href="#experiencias" class="nav-link text-white/80 hover:text-white transition-colors text-xs uppercase tracking-widest font-bold">Experiencias</a>
-                <a href="#planes" class="nav-link text-white/80 hover:text-white transition-colors text-xs uppercase tracking-widest font-bold">Precios</a>
-                <a href="#contacto" class="btn-luxury px-6 py-2.5 rounded-full text-white text-xs font-bold uppercase tracking-wider">Reservar</a>
-            </nav>
-
-            <button onclick="toggleMobileMenu()" class="md:hidden text-white nav-link">
-                <span class="material-symbols-outlined text-3xl">menu</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 bg-primary z-[60] flex flex-col items-center justify-center gap-8 -translate-y-full transition-transform duration-500">
-        <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-white/50">
-            <span class="material-symbols-outlined text-4xl">close</span>
-        </button>
-        <a href="#tour" onclick="toggleMobileMenu()" class="font-display text-4xl text-white italic">Tour 360°</a>
-        <a href="#experiencias" onclick="toggleMobileMenu()" class="font-display text-4xl text-white italic">Experiencias</a>
-        <a href="#planes" onclick="toggleMobileMenu()" class="font-display text-4xl text-white italic">Precios</a>
-        <a href="#contacto" onclick="toggleMobileMenu()" class="btn-luxury px-10 py-4 rounded-full text-white font-bold uppercase tracking-widest">Contacto</a>
-    </div>
-
-    <!-- Hero -->
-    <section id="inicio" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-bgLuxury z-10"></div>
-            <img src="https://i.ibb.co/7Nn2ngJS/hero-mobile-1.jpg" alt="Villa Laura Campestre" class="w-full h-full object-cover animate-breathe">
-        </div>
-
-        <div class="relative z-20 container mx-auto px-6 text-center mt-12 opacity-0 animate-fade-in-up">
-            <span class="inline-block px-5 py-2 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase tracking-[0.3em] mb-8 backdrop-blur-md">Sabana Grande · Atlántico</span>
-            <h1 class="text-5xl md:text-8xl font-display font-bold text-white mb-8 leading-[1.1] drop-shadow-2xl">
-                Tu escape campestre <br><span class="italic font-light text-primary-light">en el Atlántico</span>
-            </h1>
-            <p class="text-lg md:text-xl text-white/90 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                Amplios espacios verdes, aire puro y la tranquilidad que solo Villa Laura te ofrece. Ideal para familias grandes y eventos inolvidables.
+<body class="bg-gradient-premium-light dark:bg-gradient-premium-dark font-display text-deep-forest dark:text-background-light antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+<nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 w-full pointer-events-none">
+<div class="pointer-events-auto glass-panel rounded-full px-6 py-3 flex items-center justify-between gap-8 md:gap-12 transition-all duration-300 hover:bg-white/40 dark:hover:bg-black/40">
+<a class="hidden md:block text-sm font-semibold tracking-wide hover:text-primary transition-colors text-deep-forest dark:text-white" href="#inicio">INICIO</a>
+<a class="hidden md:block text-sm font-semibold tracking-wide hover:text-primary transition-colors text-deep-forest dark:text-white" href="#nosotros">NOSOTROS</a>
+<a class="text-xl md:text-2xl font-bold tracking-tight font-serif uppercase text-deep-forest dark:text-white drop-shadow-sm" href="#">Villa Laura</a>
+<a class="hidden md:block text-sm font-semibold tracking-wide hover:text-primary transition-colors text-deep-forest dark:text-white" href="#servicios">SERVICIOS</a>
+<a class="bg-primary/90 hover:bg-primary text-white text-xs md:text-sm font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:scale-105 shadow-lg backdrop-blur-sm border border-white/20" href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20reservar%20en%20Villa%20Laura" target="_blank">
+            RESERVAR
+        </a>
+</div>
+</nav>
+<header class="relative h-screen w-full flex items-center justify-center overflow-hidden" id="inicio">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 z-10"></div>
+<img alt="Villa Laura Exterior" class="w-full h-full object-cover scale-105" data-alt="Sunny day at a welcoming villa with pool and green areas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx1mU5ybh5bLbCXenYKJC8FTiuUGq5TLS6xqU5TsM_6m8Yydwwu6xmcDDDs_v3g0fFo51crcHZ8ImZ9qJ7cT0T3LLJZuC6EEwtR85Pefbaoc2YV_bWLusk-v8dwuZpl_-droyvuapFRRBzRaiN8W30RBs37jh46M1AE2XTt6d1Mm6GW653xv9im8m0orfNTW1lphMnF_OiBIMZKN6INaozV3yuAdvrrnJeUz5kT3ZBWQwkFsbIcA6hxqhrTEDAEZaNQ6fzNmwrlY0j" style="animation: zoom 20s infinite alternate;"/>
+</div>
+<div class="relative z-20 text-center px-4 flex flex-col items-center gap-6 mt-16 max-w-5xl">
+<div class="glass-panel px-8 py-3 rounded-full animate-fade-in-up">
+<p class="text-white uppercase tracking-[0.2em] text-sm md:text-base font-bold drop-shadow-md">Escápate de la rutina hoy mismo</p>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white font-medium tracking-tight text-shadow drop-shadow-2xl">
+            VILLA LAURA
+        </h1>
+<div class="glass-panel-dark px-8 py-6 rounded-2xl max-w-2xl mx-auto backdrop-blur-xl border border-white/20">
+<p class="text-white/95 font-medium text-lg md:text-2xl leading-relaxed text-shadow">
+                Imagina despertar con el sonido de la naturaleza. <br/>Tu refugio privado para reconectar y celebrar la vida.
             </p>
-
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="#planes" class="btn-luxury px-12 py-5 rounded-full text-white font-bold tracking-widest uppercase text-sm">Ver Precios de Pasadía</a>
-                <a href="#tour" class="px-12 py-5 rounded-full border border-white/40 text-white backdrop-blur-sm hover:bg-white/10 transition-all uppercase text-sm font-bold tracking-widest">Recorrido 360°</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 360 Tour -->
-    <section id="tour" class="py-24 bg-bgLuxury relative">
-        <div class="container mx-auto px-6 mb-16 text-center reveal-on-scroll">
-            <h2 class="font-display text-4xl md:text-6xl mb-6">Explora cada rincón <br><span class="italic text-primary">desde tu pantalla</span></h2>
-            <p class="text-muted max-w-2xl mx-auto leading-relaxed">No imagines el espacio, recórrelo. Camina por nuestras zonas verdes y conoce la amplitud de nuestra propiedad antes de llegar.</p>
-        </div>
-
-        <div class="container mx-auto px-6 max-w-6xl h-[550px] relative rounded-[3rem] overflow-hidden shadow-2xl reveal-on-scroll">
-            <div id="tour-overlay" class="tour-curtain absolute inset-0 z-30 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                <div class="text-center group cursor-pointer" onclick="revealTour()">
-                    <div class="w-24 h-24 rounded-full border-2 border-white/30 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 group-hover:border-white transition-all duration-500">
-                        <span class="material-symbols-outlined text-white text-5xl animate-pulse">view_in_ar</span>
-                    </div>
-                    <p class="text-white font-bold tracking-[0.3em] uppercase text-xs">Iniciar Experiencia Virtual</p>
-                </div>
-            </div>
-            <div id="tour-container" class="w-full h-full bg-stone-200 flex items-center justify-center">
-                <p class="text-muted italic">Cargando escenario virtual...</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Infinite Carousel Visual -->
-    <section id="experiencias" class="py-12 bg-white overflow-hidden">
-        <div class="flex animate-infinite-scroll whitespace-nowrap gap-6 py-4">
-            <!-- Set 1 -->
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&q=80&w=800" alt="Piscina Villa Laura" class="w-full h-full object-cover">
-            </div>
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800" alt="Zonas Verdes" class="w-full h-full object-cover">
-            </div>
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?auto=format&fit=crop&q=80&w=800" alt="Área Social" class="w-full h-full object-cover">
-            </div>
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&q=80&w=800" alt="Jardines" class="w-full h-full object-cover">
-            </div>
-            <!-- Duplicate for Loop -->
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&q=80&w=800" alt="Piscina Villa Laura" class="w-full h-full object-cover">
-            </div>
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800" alt="Zonas Verdes" class="w-full h-full object-cover">
-            </div>
-            <div class="w-[400px] h-[300px] rounded-3xl overflow-hidden flex-shrink-0 shadow-lg">
-                <img src="https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?auto=format&fit=crop&q=80&w=800" alt="Área Social" class="w-full h-full object-cover">
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-24 bg-bgLuxury">
-        <div class="container mx-auto px-6">
-            <h2 class="font-display text-4xl text-center mb-16 reveal-on-scroll italic">Lo que dicen <span class="not-italic font-bold">nuestros visitantes</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white p-12 rounded-[2.5rem] shadow-sm reveal-on-scroll">
-                    <div class="flex text-yellow-500 mb-6"><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span></div>
-                    <p class="text-lg italic mb-8">"El espacio es increíble para reuniones familiares, los niños disfrutaron mucho la zona verde."</p>
-                    <p class="font-bold text-primary">— Familia Rodríguez</p>
-                </div>
-                <div class="bg-white p-12 rounded-[2.5rem] shadow-sm reveal-on-scroll" style="transition-delay: 200ms;">
-                    <div class="flex text-yellow-500 mb-6"><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span></div>
-                    <p class="text-lg italic mb-8">"La conexión a internet es excelente (Starlink), pudimos estar conectados mientras disfrutábamos de la piscina."</p>
-                    <p class="font-bold text-primary">— Juan P.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Plans -->
-    <section id="planes" class="py-24 bg-white relative overflow-hidden">
-        <div class="container mx-auto px-6 text-center mb-20 reveal-on-scroll">
-            <h2 class="font-display text-5xl md:text-7xl mb-4">Planes y <span class="italic font-light">Tarifas</span></h2>
-            <div class="w-24 h-1 bg-primary mx-auto"></div>
-        </div>
-
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-            <!-- Plan 1 -->
-            <div onclick="scrollToForm('Pasadía Express')" class="group cursor-pointer bg-bgLuxury p-10 rounded-[3rem] border border-stone-100 hover:border-primary transition-all duration-500 reveal-on-scroll">
-                <h3 class="font-display text-2xl mb-2">Pasadía Express</h3>
-                <p class="text-xs uppercase tracking-widest text-muted mb-8">9:00 AM a 6:00 PM</p>
-                <div class="text-4xl font-bold mb-8 text-primary">$35.000 <span class="text-sm font-normal text-muted">/ COP</span></div>
-                <ul class="text-sm space-y-4 mb-10 text-left">
-                    <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">done</span> Piscina (1.4m profundidad)</li>
-                    <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">done</span> Zonas verdes y jardines</li>
-                    <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">done</span> Sonido profesional incluido</li>
-                </ul>
-                <span class="font-bold border-b-2 border-primary pb-1 group-hover:bg-primary group-hover:text-white transition-all">Seleccionar</span>
-            </div>
-
-            <!-- Plan 2 (Featured) -->
-            <div onclick="scrollToForm('Estadía 24 Horas')" class="group cursor-pointer bg-primary p-12 rounded-[3rem] shadow-2xl scale-105 transition-all duration-500 reveal-on-scroll">
-                <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-[10px] text-white font-bold uppercase tracking-widest mb-6">Más Solicitado</span>
-                <h3 class="font-display text-3xl mb-2 text-white italic">Estadía 24 Horas</h3>
-                <p class="text-xs uppercase tracking-widest text-white/60 mb-8">Capacidad: 22 personas</p>
-                <div class="text-4xl font-bold mb-8 text-white">$75.000 <span class="text-sm font-normal text-white/60">/ COP</span></div>
-                <ul class="text-sm space-y-4 mb-10 text-left text-white/90">
-                    <li class="flex items-center gap-3"><span class="material-symbols-outlined text-white/30">done</span> 22 personas en cama</li>
-                    <li class="flex items-center gap-3"><span class="material-symbols-outlined text-white/30">done</span> Wi-Fi Starlink Alta Velocidad</li>
-                    <li class="flex items-center gap-3"><span class="material-symbols-outlined text-white/30">done</span> Cocina completa y parqueadero</li>
-                </ul>
-                <span class="text-white font-bold border-b-2 border-white/50 pb-1">Reservar estancia</span>
-            </div>
-
-            <!-- Plan 3 -->
-            <div onclick="scrollToForm('Evento Social')" class="group cursor-pointer bg-bgLuxury p-10 rounded-[3rem] border border-stone-100 hover:border-primary transition-all duration-500 reveal-on-scroll">
-                <h3 class="font-display text-2xl mb-2">Eventos Especiales</h3>
-                <p class="text-xs uppercase tracking-widest text-muted mb-8">Hasta 120 personas</p>
-                <div class="text-3xl font-bold mb-8 text-primary">Cotización <span class="text-sm font-normal text-muted">Interna</span></div>
-                <p class="text-sm text-muted mb-10 text-left leading-relaxed">Amplias zonas para montajes de eventos sociales, bodas o eventos empresariales con logística premium.</p>
-                <span class="font-bold border-b-2 border-primary pb-1 group-hover:bg-primary group-hover:text-white transition-all">Pedir Propuesta</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Booking Form -->
-    <section id="contacto" class="py-24 bg-bgLuxury">
-        <div class="container mx-auto px-6 max-w-5xl">
-            <div class="bg-white rounded-[4rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row reveal-on-scroll">
-                <div class="lg:w-2/5 bg-primary p-12 text-white">
-                    <h2 class="font-display text-4xl mb-8 italic">Asegura tu <br>fecha hoy</h2>
-                    <p class="text-white/70 mb-12">Estamos listos para brindarte la mejor experiencia campestre de Sabana Grande. </p>
-                    
-                    <div class="space-y-8">
-                        <div class="flex items-center gap-5">
-                            <span class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center"><span class="material-symbols-outlined">map</span></span>
-                            <p class="text-sm">Sabana Grande, Atlántico</p>
-                        </div>
-                        <div class="flex items-center gap-5">
-                            <span class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center"><span class="material-symbols-outlined">call</span></span>
-                            <p class="text-sm">+57 304 271 8569</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:w-3/5 p-12 md:p-16">
-                    <form class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-muted">Nombre Completo</label>
-                            <input type="text" id="nombre" placeholder="Tu nombre..." class="w-full bg-stone-50 border-b-2 border-stone-200 py-3 focus:border-primary transition-all outline-none">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-muted">Celular</label>
-                            <input type="tel" id="celular" placeholder="+57 ..." class="w-full bg-stone-50 border-b-2 border-stone-200 py-3 focus:border-primary outline-none">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-muted">Tipo de Experiencia</label>
-                            <select id="experiencia" class="w-full bg-stone-50 border-b-2 border-stone-200 py-3 focus:border-primary outline-none">
-                                <option value="Pasadía Express">Pasadía Express</option>
-                                <option value="Estadía 24 Horas">Estadía 24 Horas</option>
-                                <option value="Evento Social">Evento Especial</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-muted">Personas</label>
-                            <input type="number" id="pax" placeholder="Nro de personas" class="w-full bg-stone-50 border-b-2 border-stone-200 py-3 focus:border-primary outline-none">
-                        </div>
-                        <button type="button" onclick="sendWhatsApp()" class="md:col-span-2 btn-luxury w-full py-6 rounded-2xl text-white font-bold tracking-widest uppercase flex items-center justify-center gap-3">
-                            <span class="material-symbols-outlined">send</span> Enviar Solicitud por WhatsApp
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-stone-100 pt-24 pb-12">
-        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
-            <div class="lg:col-span-4">
-                <h3 class="font-display text-3xl mb-8 tracking-tight">VILLA LAURA</h3>
-                <p class="text-muted leading-relaxed mb-8">El refugio perfecto para conectar con lo esencial: naturaleza, familia y tranquilidad absoluta.</p>
-                <div class="flex gap-4">
-                    <a href="https://instagram.com/cabanavillalaura" class="w-12 h-12 rounded-full bg-stone-50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.335 3.608 1.31.975.975 1.248 2.242 1.31 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.335 2.633-1.31 3.608-.975.975-2.242 1.248-3.608 1.31-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.335-3.608-1.31-.975-.975-1.248-2.242-1.31-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.335-2.633 1.31-3.608.975-.975 2.242-1.248 3.608-1.31 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.337 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.281.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.338-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+</div>
+<a class="mt-12 group flex flex-col items-center gap-2 text-white/90 hover:text-white transition-colors cursor-pointer glass-button rounded-full p-4 w-12 h-12 flex items-center justify-center" href="#nosotros">
+<span class="material-symbols-outlined animate-bounce">keyboard_arrow_down</span>
+</a>
+</div>
+</header>
+<a class="whatsapp-float group pointer-events-auto" href="https://wa.me/1234567890?text=Hola,%20estoy%20interesado%20en%20reservar%20una%20fecha" target="_blank">
+<div class="whatsapp-pulse"></div>
+<div class="glass-panel rounded-full p-3 md:p-4 bg-[#25D366]/80 hover:bg-[#25D366] transition-colors shadow-2xl backdrop-blur-md flex items-center justify-center border border-white/20">
+<svg class="w-8 h-8 md:w-10 md:h-10 fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+</svg>
+</div>
+</a>
+<section class="relative py-24 px-6 md:px-12 bg-gradient-to-br from-background-light to-[#e0e9e4] dark:from-background-dark dark:to-[#0b1814]" id="nosotros">
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<div class="glass-panel-dark dark:glass-panel inline-flex p-4 rounded-full mb-6 text-primary shadow-lg ring-1 ring-primary/20">
+<span class="material-symbols-outlined text-4xl">family_restroom</span>
+</div>
+<h2 class="font-serif text-3xl md:text-5xl text-deep-forest dark:text-white mb-8 leading-tight">
+            Momentos que se convierten en <br/><span class="italic text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-green-400">recuerdos inolvidables.</span>
+</h2>
+<div class="premium-card p-8 md:p-10 rounded-2xl mx-auto">
+<p class="text-deep-forest/80 dark:text-white/80 text-lg md:text-xl leading-relaxed font-normal">
+                En Villa Laura, no solo te ofrecemos un espacio, te brindamos el escenario perfecto para tus mejores historias. Imagina risas compartidas junto a la piscina y atardeceres que roban el aliento. Aquí, la única regla es desconectar del mundo para conectar contigo y los tuyos.
+            </p>
+</div>
+</div>
+<div class="absolute top-1/4 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-0"></div>
+<div class="absolute bottom-1/4 right-0 w-80 h-80 bg-champagne/20 rounded-full blur-3xl pointer-events-none -z-0"></div>
+</section>
+<section class="py-20 px-4 md:px-12 bg-gradient-to-b from-[#1A3318] to-[#0f221c] text-white relative overflow-hidden" id="amenidades">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+<div class="max-w-7xl mx-auto relative z-10">
+<div class="text-center mb-16">
+<div class="inline-block glass-panel px-4 py-1 rounded-full mb-3">
+<h3 class="text-champagne font-bold uppercase tracking-[0.2em] text-xs">Pensado para tu confort</h3>
+</div>
+<h2 class="font-serif text-4xl md:text-5xl mb-6 drop-shadow-lg">Todo listo para recibirte</h2>
+<p class="text-white/80 max-w-2xl mx-auto text-lg font-light glass-panel-dark p-4 rounded-xl border border-white/10">Instalaciones de primer nivel diseñadas para que tu única preocupación sea disfrutar cada segundo.</p>
+</div>
+<input class="peer hidden" id="show-more-amenities" type="checkbox"/>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">wifi</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Conexión Total</h4>
+<p class="text-sm text-white/70">WiFi de alta velocidad.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">pool</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Piscina Cristalina</h4>
+<p class="text-sm text-white/70">Diversión bajo el sol.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">speaker</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Sonido Envolvente</h4>
+<p class="text-sm text-white/70">Ambienta tus mejores momentos.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">deck</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Relax Lounge</h4>
+<p class="text-sm text-white/70">Zonas ideales para descansar.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">forest</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Entorno Verde</h4>
+<p class="text-sm text-white/70">Respira aire puro.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">kitchen</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Cocina Full</h4>
+<p class="text-sm text-white/70">Como en casa, pero mejor.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">pets</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Pet Friendly</h4>
+<p class="text-sm text-white/70">Trae a tu mejor amigo.</p>
+</div>
+<div class="amenity-item flex flex-col items-center text-center p-6 glass-panel rounded-2xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 group cursor-default border border-white/10 shadow-lg">
+<div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors">directions_car</span>
+</div>
+<h4 class="font-serif text-xl mb-2 font-medium">Parking Privado</h4>
+<p class="text-sm text-white/70">Seguridad para tu vehículo.</p>
+</div>
+</div>
+<label class="mobile-toggle-btn mt-8 block md:hidden text-center cursor-pointer" for="show-more-amenities">
+<span class="show-text glass-button inline-block rounded-full px-8 py-3 text-sm font-bold text-white shadow-lg">Ver más amenidades</span>
+<span class="hide-text glass-button inline-block rounded-full px-8 py-3 text-sm font-bold text-white shadow-lg">Ver menos</span>
+</label>
+</div>
+</section>
+<section class="relative py-28 bg-gradient-to-br from-[#152e26] to-[#0b1814] overflow-hidden" id="recorrido">
+<div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: radial-gradient(#D1C4A9 1px, transparent 1px); background-size: 32px 32px;"></div>
+<div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+<div class="text-center mb-16 space-y-4">
+<span class="text-champagne font-bold uppercase tracking-[0.2em] text-xs glass-panel px-4 py-1 rounded-full">Transparencia total</span>
+<h2 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg">
+                Recorre la Villa antes de llegar
+            </h2>
+<div class="glass-panel-dark p-6 rounded-2xl max-w-2xl mx-auto backdrop-blur-md border border-white/10">
+<p class="text-white/80 text-lg md:text-xl font-display leading-relaxed">
+                    Queremos que te enamores de cada rincón. Explora nuestras instalaciones desde la comodidad de tu pantalla y visualiza tu próxima experiencia.
+                </p>
+</div>
+</div>
+<a class="block relative w-full aspect-[3/4] md:aspect-video rounded-3xl overflow-hidden bg-black group border border-white/10 shadow-2xl" href="https://wa.me/1234567890?text=Hola,%20quisiera%20ver%20el%20tour%20virtual%20completo" target="_blank">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyNtlofMt5GWeBWaE6pG0SX8mWcVY1P3E8V0d4vsVHzGs8etjbOOUl2rG-BoxLPR1xkFCYTvetbqbUJ2WIeL9R6TrhK5TRFOZuR6heN6wUJrDZ2bM7fYgf5q82ebHz__Fm_KWvVdrHiEOBv_s2OUj4cS1xAHkQaYHo18oF3Ad_d36GyxRt_SMUx-DjlqiAytFk9IdGylhUGpx7BNg1L5JaNQ7cJzhX5OiadFX_0VkoJ-cENiXcxRaEewENKIMEkVoc6SkHBoBAdxWE');"></div>
+<div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 backdrop-blur-[2px] group-hover:backdrop-blur-0"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="group/btn relative flex flex-col items-center gap-4 transition-all duration-300 group-hover:scale-105">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/20 backdrop-blur-md flex items-center justify-center group-hover/btn:bg-primary group-hover/btn:border-primary transition-all duration-300 shadow-2xl glass-panel">
+<span class="material-symbols-outlined text-4xl text-white transition-colors">360</span>
+</div>
+<span class="glass-panel px-6 py-2 rounded-full text-white font-bold text-lg tracking-wide uppercase transition-all shadow-lg border border-white/20">Iniciar Recorrido 360°</span>
+</div>
+</div>
+</a>
+<div class="flex justify-center mt-8">
+<p class="text-white/60 text-sm glass-panel px-4 py-2 rounded-full">Explora las habitaciones, la piscina y las zonas sociales.</p>
+</div>
+</div>
+</section>
+<section class="py-24 px-4 md:px-12 bg-gradient-to-t from-[#f0f4f2] to-white dark:from-[#0d1c17] dark:to-background-dark relative">
+<div class="max-w-7xl mx-auto relative z-10">
+<h2 class="font-serif text-4xl md:text-5xl text-center text-deep-forest dark:text-white mb-6">Lo que dicen quienes nos visitan</h2>
+<p class="text-center text-deep-forest/60 dark:text-white/60 mb-16 max-w-2xl mx-auto">La mejor carta de presentación son las experiencias de nuestros huéspedes. Historias reales de momentos compartidos.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="premium-card p-8 rounded-2xl flex flex-col gap-4 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="flex items-center gap-4 border-b border-gray-100 dark:border-white/10 pb-4">
+<div class="w-12 h-12 bg-blue-100/50 backdrop-blur-sm rounded-full flex items-center justify-center text-blue-600 font-bold text-lg shadow-inner">JC</div>
+<div>
+<h4 class="font-bold text-deep-forest dark:text-white">Juan Camilo P.</h4>
+<p class="text-xs text-gray-500">Hace 2 semanas</p>
+</div>
+</div>
+<div class="flex text-yellow-400 text-sm">
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed italic">
+                    "Excelente lugar para desconectar. Fuimos con toda la familia y los niños disfrutaron muchísimo la piscina. Muy limpio y la atención fue muy amable. ¡Volveremos!"
+                </p>
+</div>
+<div class="premium-card p-8 rounded-2xl flex flex-col gap-4 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="flex items-center gap-4 border-b border-gray-100 dark:border-white/10 pb-4">
+<div class="w-12 h-12 bg-purple-100/50 backdrop-blur-sm rounded-full flex items-center justify-center text-purple-600 font-bold text-lg shadow-inner">MR</div>
+<div>
+<h4 class="font-bold text-deep-forest dark:text-white">María Rodríguez</h4>
+<p class="text-xs text-gray-500">Hace 1 mes</p>
+</div>
+</div>
+<div class="flex text-yellow-400 text-sm">
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed italic">
+                    "Celebramos un cumpleaños y fue perfecto. El espacio es amplio y nos permitieron llevar nuestra comida y decoración. Recomendadísimo para eventos pequeños."
+                </p>
+</div>
+<div class="premium-card p-8 rounded-2xl flex flex-col gap-4 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="flex items-center gap-4 border-b border-gray-100 dark:border-white/10 pb-4">
+<div class="w-12 h-12 bg-green-100/50 backdrop-blur-sm rounded-full flex items-center justify-center text-green-600 font-bold text-lg shadow-inner">AL</div>
+<div>
+<h4 class="font-bold text-deep-forest dark:text-white">Andrés López</h4>
+<p class="text-xs text-gray-500">Hace 3 semanas</p>
+</div>
+</div>
+<div class="flex text-yellow-400 text-sm">
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed italic">
+                    "La pasadía estuvo genial. El precio es muy justo para todo lo que ofrecen. El sitio es tranquilo, seguro y muy bonito para tomar fotos."
+                </p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 px-4 bg-gradient-to-b from-[#f6f8f7] to-[#e8f5e9] dark:from-background-dark dark:to-[#142820] relative overflow-hidden" id="servicios">
+<div class="max-w-6xl mx-auto relative z-10">
+<div class="text-center mb-16">
+<h2 class="font-serif text-4xl md:text-5xl text-deep-forest dark:text-white">Elige tu Experiencia Ideal</h2>
+<p class="text-deep-forest/70 dark:text-white/70 mt-4 text-lg">Opciones claras y flexibles diseñadas para adaptarse a tu plan perfecto.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+<div class="premium-card p-8 rounded-3xl flex flex-col hover:border-primary/50 transition-all duration-300 h-full border border-transparent">
+<div class="flex-1">
+<span class="font-serif text-2xl text-deep-forest dark:text-white block mb-2 font-bold">Pasadía</span>
+<p class="text-sm text-deep-forest/60 dark:text-white/60 uppercase tracking-wider mb-6">Un escape de sol y diversión</p>
+<div class="w-12 h-1 bg-primary mb-6 rounded-full"></div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-start gap-3 text-sm text-deep-forest/80 dark:text-white/80">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            9:00 a.m. a 6:00 p.m.
+                        </li>
+<li class="flex items-start gap-3 text-sm text-deep-forest/80 dark:text-white/80">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Acceso total a zonas húmedas
+                        </li>
+<li class="flex items-start gap-3 text-sm text-deep-forest/80 dark:text-white/80">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Ambiente exclusivo familiar
+                        </li>
+</ul>
+</div>
+<div class="border-t border-gray-200 dark:border-white/10 pt-6">
+<p class="text-xs text-deep-forest/50 dark:text-white/50 mb-1">Precio por persona</p>
+<p class="text-3xl font-bold text-primary mb-6">$35.000 <span class="text-sm font-normal text-deep-forest/60 dark:text-white/60">COP</span></p>
+<a class="block w-full py-4 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-sm font-bold uppercase transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-[1.02]" href="https://wa.me/1234567890?text=Hola,%20quisiera%20reservar%20un%20Pasadía" target="_blank">
+                        Reservar Pasadía
                     </a>
-                </div>
-            </div>
-            <div class="lg:col-span-8">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-                    <div class="text-center">
-                        <span class="material-symbols-outlined text-primary text-3xl mb-4">pool</span>
-                        <p class="text-[10px] font-bold uppercase tracking-widest">Piscina 1.4m</p>
-                    </div>
-                    <div class="text-center">
-                        <span class="material-symbols-outlined text-primary text-3xl mb-4">wifi</span>
-                        <p class="text-[10px] font-bold uppercase tracking-widest">Starlink Wifi</p>
-                    </div>
-                    <div class="text-center">
-                        <span class="material-symbols-outlined text-primary text-3xl mb-4">speaker_group</span>
-                        <p class="text-[10px] font-bold uppercase tracking-widest">Sonido Prof.</p>
-                    </div>
-                    <div class="text-center">
-                        <span class="material-symbols-outlined text-primary text-3xl mb-4">directions_car</span>
-                        <p class="text-[10px] font-bold uppercase tracking-widest">10 Parqueaderos</p>
-                    </div>
-                </div>
-                <div class="h-[300px] rounded-[2rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 shadow-inner">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15671.042735791783!2d-74.75!3d10.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDMwJzAwLjAiTiA3NMKwNDUnMDAuMCJX!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
-        <div class="container mx-auto px-6 text-center text-[10px] text-muted uppercase tracking-[0.2em]">
-            &copy; 2026 Villa Laura Sabana Grande. Experiencia Rural de Lujo.
-        </div>
-    </footer>
+</div>
+</div>
+<div class="glass-panel-dark text-white p-8 rounded-3xl relative transform md:-translate-y-6 shadow-2xl flex flex-col h-full ring-4 ring-primary/20 backdrop-blur-2xl bg-gradient-to-br from-[#1A3318]/95 to-[#0f221c]/95">
+<div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-2 rounded-bl-xl rounded-tr-xl shadow-lg">FAVORITO</div>
+<div class="flex-1">
+<span class="font-serif text-3xl block mb-2 font-bold text-shadow">Estadía</span>
+<p class="text-sm text-white/70 uppercase tracking-wider mb-6">Descanso total de 24 horas</p>
+<div class="w-12 h-1 bg-white mb-6 rounded-full"></div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-start gap-3 text-sm text-white/90">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Disfruta 24 horas continuas
+                        </li>
+<li class="flex items-start gap-3 text-sm text-white/90">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Incluye todas las amenidades
+                        </li>
+<li class="flex items-start gap-3 text-sm text-white/90">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Cocina totalmente equipada
+                        </li>
+<li class="flex items-start gap-3 text-sm text-white/90">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Sin descorche de bebidas
+                        </li>
+</ul>
+</div>
+<div class="border-t border-white/20 pt-6">
+<p class="text-xs text-white/50 mb-1">Precio por persona</p>
+<p class="text-3xl font-bold mb-6 text-white text-shadow">$70.000 <span class="text-sm font-normal text-white/60">COP</span></p>
+<a class="block w-full py-4 text-center bg-white text-deep-forest rounded-full text-sm font-bold uppercase hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] transform" href="https://wa.me/1234567890?text=Hola,%20quisiera%20reservar%20una%20Estadía" target="_blank">
+                        Reservar Ahora
+                    </a>
+</div>
+</div>
+<div class="premium-card p-8 rounded-3xl flex flex-col hover:border-primary/50 transition-all duration-300 h-full border border-transparent">
+<div class="flex-1">
+<span class="font-serif text-2xl text-deep-forest dark:text-white block mb-2 font-bold">Eventos</span>
+<p class="text-sm text-deep-forest/60 dark:text-white/60 uppercase tracking-wider mb-6">Celebraciones Inolvidables</p>
+<div class="w-12 h-1 bg-primary mb-6 rounded-full"></div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-start gap-3 text-sm text-deep-forest/80 dark:text-white/80">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Espacios amplios y versátiles
+                        </li>
+<li class="flex items-start gap-3 text-sm text-deep-forest/80 dark:text-white/80">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Privacidad garantizada para tu grupo
+                        </li>
+<li class="flex items-start gap-3 text-sm text-deep-forest/80 dark:text-white/80">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Perfecto para bodas y cumpleaños
+                        </li>
+</ul>
+</div>
+<div class="border-t border-gray-200 dark:border-white/10 pt-6">
+<p class="text-xs text-deep-forest/50 dark:text-white/50 mb-1">Presupuesto</p>
+<p class="text-xl font-bold text-deep-forest dark:text-white mb-6">Cotización <span class="text-sm font-normal text-deep-forest/60 dark:text-white/60">a medida</span></p>
+<a class="block w-full py-4 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-sm font-bold uppercase transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-[1.02]" href="https://wa.me/1234567890?text=Hola,%20quisiera%20cotizar%20un%20Evento" target="_blank">
+                        Cotizar Evento
+                    </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="relative py-12 md:py-24 px-4 bg-gradient-to-br from-[#10221c] via-[#1A3318] to-[#0f1c16] text-background-light overflow-hidden" id="contacto">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] opacity-20 pointer-events-none"></div>
+<div class="relative z-10 max-w-4xl mx-auto">
+<div class="text-center mb-8 md:mb-12">
+<div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg border border-white/20 animate-pulse">
+<span class="material-symbols-outlined text-primary text-4xl">chat</span>
+</div>
+<h2 class="font-serif text-4xl md:text-5xl text-white mb-4 drop-shadow-lg">Reserva Tu Fecha</h2>
+<div class="glass-panel p-4 rounded-xl inline-block max-w-xl">
+<p class="text-white/90 text-lg">No dejes pasar la oportunidad de vivir una experiencia única. Escríbenos y asegura tu espacio en Villa Laura.</p>
+</div>
+</div>
+<form action="https://wa.me/1234567890" class="glass-panel p-6 md:p-12 rounded-[2.5rem] shadow-2xl backdrop-blur-xl border-t border-white/20" method="get" target="_blank">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Tu Nombre</label>
+<input class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" name="text" placeholder="e.g. María González" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Tu Contacto</label>
+<input class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" placeholder="Teléfono o Email" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Fecha deseada</label>
+<input class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none" type="date"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Interés</label>
+<div class="relative">
+<select class="w-full appearance-none bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none [&amp;&gt;option]:text-black">
+<option value="">Selecciona tu plan</option>
+<option value="pasadia">Pasadía ($35.000 COP)</option>
+<option value="estadia">Estadía ($70.000 COP)</option>
+<option value="evento">Evento Especial</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-2 mb-8 md:mb-12">
+<label class="text-xs font-bold uppercase tracking-widest text-champagne pl-2">Detalles adicionales</label>
+<textarea class="w-full bg-black/20 border border-white/10 px-6 py-4 rounded-2xl text-white placeholder-white/30 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-black/30 transition-all outline-none resize-none" placeholder="Cuéntanos cuántas personas vienen o si tienes alguna duda..." rows="3"></textarea>
+</div>
+<div class="flex justify-center">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-primary/50 w-full md:w-auto text-lg tracking-wide border border-white/10 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined">send</span> ENVIAR A WHATSAPP
+                </button>
+</div>
+</form>
+</div>
+</section>
+<footer class="bg-gradient-to-t from-[#050f0c] to-[#10221c] text-white pt-16 pb-8 px-6 border-t border-white/5 relative z-10">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-12">
+<div class="md:col-span-4 flex flex-col gap-4">
+<h4 class="text-white font-serif text-3xl font-bold tracking-tight">VILLA LAURA</h4>
+<p class="text-white/60 text-sm leading-relaxed max-w-sm">
+                Más que un destino, somos el escenario de tus mejores recuerdos. Naturaleza, confort y atención premium en un solo lugar.
+            </p>
+</div>
+<div class="md:col-span-4 flex flex-col gap-4 md:pl-12">
+<h5 class="text-champagne font-bold text-xs uppercase tracking-[0.15em] mb-2">Navegación</h5>
+<div class="flex flex-col gap-3">
+<a class="text-white/80 hover:text-primary transition-colors text-sm font-medium w-fit" href="#inicio">Inicio</a>
+<a class="text-white/80 hover:text-primary transition-colors text-sm font-medium w-fit" href="#amenidades">Amenidades</a>
+<a class="text-white/80 hover:text-primary transition-colors text-sm font-medium w-fit" href="#recorrido">Recorrido Virtual</a>
+<a class="text-white/80 hover:text-primary transition-colors text-sm font-medium w-fit" href="#servicios">Servicios y Tarifas</a>
+<a class="text-white/80 hover:text-primary transition-colors text-sm font-medium w-fit" href="#contacto">Contacto</a>
+</div>
+</div>
+<div class="md:col-span-4 flex flex-col gap-6">
+<h5 class="text-champagne font-bold text-xs uppercase tracking-[0.15em] mb-2">Hablemos</h5>
+<a class="group glass-button flex items-center gap-4 p-4 rounded-xl border border-white/10 hover:border-primary/50" href="https://wa.me/1234567890" target="_blank">
+<div class="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
+</div>
+<div>
+<span class="block text-white font-bold text-sm">WhatsApp</span>
+<span class="block text-white/50 text-xs">Agenda tu visita</span>
+</div>
+</a>
+<a class="group glass-button flex items-center gap-4 p-4 rounded-xl border border-white/10 hover:border-primary/50" href="https://instagram.com" target="_blank">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FFDC80] via-[#FD1D1D] to-[#833AB4] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</div>
+<div>
+<span class="block text-white font-bold text-sm">Instagram</span>
+<span class="block text-white/50 text-xs">Descubre nuestra galería</span>
+</div>
+</a>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30">
+<p>© 2024 Villa Laura. Tu refugio ideal.</p>
+<div class="flex gap-4">
+<a class="hover:text-white/50 transition-colors" href="#">Términos</a>
+<a class="hover:text-white/50 transition-colors" href="#">Privacidad</a>
+</div>
+</div>
+</footer>
 
-    <!-- Scripts -->
-    <script>
-        // Header Shrink & Reveal logic
-        const nav = document.getElementById('main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 60) nav.classList.add('header-shrink');
-            else nav.classList.remove('header-shrink');
-            
-            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-                if (el.getBoundingClientRect().top < (window.innerHeight - 100)) el.classList.add('active');
-            });
-        });
-
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('-translate-y-full');
-            document.body.classList.toggle('overflow-hidden');
-        }
-
-        function revealTour() {
-            document.getElementById('tour-overlay').classList.add('tour-hidden');
-            document.getElementById('tour-container').innerHTML = `<iframe src="https://tour.panoee.net/697950dfe479ca135fc79bc1" class="w-full h-full border-0" allowfullscreen></iframe>`;
-        }
-
-        function scrollToForm(tipo) {
-            document.getElementById('experiencia').value = tipo;
-            document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function sendWhatsApp() {
-            const nombre = document.getElementById('nombre').value;
-            const celular = document.getElementById('celular').value;
-            const exp = document.getElementById('experiencia').value;
-            const pax = document.getElementById('pax').value;
-            
-            if(!nombre || !celular || !pax) return alert("Por favor completa los datos de contacto.");
-
-            const msg = `🌿 *VILLA LAURA - SOLICITUD WEB* 🌿%0A%0A` +
-                        `👤 *Nombre:* ${nombre}%0A` +
-                        `📞 *Celular:* ${celular}%0A` +
-                        `✨ *Experiencia:* ${exp}%0A` +
-                        `👥 *Personas:* ${pax}%0A%0A` +
-                        `_Me gustaría recibir información de disponibilidad._`;
-            
-            window.open(`https://wa.me/573042718569?text=${msg}`, '_blank');
-        }
-
-        // Trigger first check
-        window.onload = () => {
-             document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('active');
-            });
-        };
-    </script>
-</body>
-
-</html>
+</body></html>
