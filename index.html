@@ -165,10 +165,10 @@
 <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white font-medium tracking-tight text-shadow drop-shadow-2xl">
             VILLA LAURA
         </h1>
-<div class="glass-panel-dark px-8 py-6 rounded-2xl max-w-2xl mx-auto backdrop-blur-xl border border-white/20">
-<p class="text-white/95 font-medium text-lg md:text-2xl leading-relaxed text-shadow">
-                Imagina despertar con el sonido de la naturaleza. <br/>Tu refugio privado para reconectar y celebrar la vida.
-            </p>
+<div class="max-w-2xl mx-auto">
+    <p class="text-white/95 font-medium text-lg md:text-2xl leading-relaxed text-shadow">
+        Aquí el tiempo se vive distinto. <br/>Un lugar para descansar, compartir y crear recuerdos inolvidables.
+    </p>
 </div>
 <a class="mt-12 group flex flex-col items-center gap-2 text-white/90 hover:text-white transition-colors cursor-pointer glass-button rounded-full p-4 w-12 h-12 flex items-center justify-center" href="#nosotros">
 <span class="material-symbols-outlined animate-bounce">keyboard_arrow_down</span>
@@ -289,18 +289,29 @@
                 </p>
 </div>
 </div>
-<a class="block relative w-full aspect-[3/4] md:aspect-video rounded-3xl overflow-hidden bg-black group border border-white/10 shadow-2xl" href="https://wa.me/1234567890?text=Hola,%20quisiera%20ver%20el%20tour%20virtual%20completo" target="_blank">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyNtlofMt5GWeBWaE6pG0SX8mWcVY1P3E8V0d4vsVHzGs8etjbOOUl2rG-BoxLPR1xkFCYTvetbqbUJ2WIeL9R6TrhK5TRFOZuR6heN6wUJrDZ2bM7fYgf5q82ebHz__Fm_KWvVdrHiEOBv_s2OUj4cS1xAHkQaYHo18oF3Ad_d36GyxRt_SMUx-DjlqiAytFk9IdGylhUGpx7BNg1L5JaNQ7cJzhX5OiadFX_0VkoJ-cENiXcxRaEewENKIMEkVoc6SkHBoBAdxWE');"></div>
-<div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 backdrop-blur-[2px] group-hover:backdrop-blur-0"></div>
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="group/btn relative flex flex-col items-center gap-4 transition-all duration-300 group-hover:scale-105">
-<div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/20 backdrop-blur-md flex items-center justify-center group-hover/btn:bg-primary group-hover/btn:border-primary transition-all duration-300 shadow-2xl glass-panel">
-<span class="material-symbols-outlined text-4xl text-white transition-colors">360</span>
+<div class="relative w-full aspect-[3/4] md:aspect-video rounded-3xl overflow-hidden bg-black group border border-white/10 shadow-2xl" id="tour-container">
+    <iframe id="vr-tour-iframe" class="absolute inset-0 w-full h-full z-0" src="https://tour.panoee.net/697950dfe479ca135fc79bc1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+
+    <div id="tour-curtain" class="absolute inset-0 z-10 flex items-center justify-center cursor-pointer transition-all duration-1000 bg-black/20 backdrop-blur-[6px] hover:backdrop-blur-[3px] hover:bg-black/10" onclick="hideCurtain()">
+        <div class="group/btn relative flex flex-col items-center gap-4 transition-all duration-300 group-hover:scale-105">
+            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/20 backdrop-blur-md flex items-center justify-center group-hover/btn:bg-primary group-hover/btn:border-primary transition-all duration-300 shadow-2xl glass-panel">
+                <span class="material-symbols-outlined text-4xl text-white transition-colors">360</span>
+            </div>
+            <span class="glass-panel px-6 py-2 rounded-full text-white font-bold text-lg tracking-wide uppercase transition-all shadow-lg border border-white/20">Entrar al Recorrido</span>
+        </div>
+    </div>
 </div>
-<span class="glass-panel px-6 py-2 rounded-full text-white font-bold text-lg tracking-wide uppercase transition-all shadow-lg border border-white/20">Iniciar Recorrido 360°</span>
-</div>
-</div>
-</a>
+
+<script>
+    function hideCurtain() {
+        const curtain = document.getElementById('tour-curtain');
+        // Desvanecimiento premium tipo Apple
+        curtain.style.opacity = '0';
+        setTimeout(() => {
+            curtain.classList.add('hidden');
+        }, 1000);
+    }
+</script>
 <div class="flex justify-center mt-8">
 <p class="text-white/60 text-sm glass-panel px-4 py-2 rounded-full">Explora las habitaciones, la piscina y las zonas sociales.</p>
 </div>
