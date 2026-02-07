@@ -139,9 +139,45 @@
                 display: none !important;
             }
         }
+        /* --- ESTILOS DEL PRELOADER --- */
+        #experiencia-preloader {
+            pointer-events: all;
+        }
+        .animate-spin-slow {
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        body.cargando {
+            overflow: hidden !important;
+        }
+        .preloader-hidden {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
     </style>
 </head>
-<body class="bg-gradient-premium-light dark:bg-gradient-premium-dark font-display text-deep-forest dark:text-background-light antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+<body class="cargando bg-gradient-premium-light dark:bg-gradient-premium-dark font-display text-deep-forest dark:text-background-light antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+
+<div id="experiencia-preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background-dark transition-opacity duration-1000 ease-in-out">
+    <div class="relative flex flex-col items-center gap-8">
+        <div class="relative w-24 h-24">
+            <div class="absolute inset-0 rounded-full border-4 border-primary/20"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin-slow"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-4xl animate-pulse">hourglass_empty</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+            <p class="text-white font-display font-light tracking-[0.4em] uppercase text-xs md:text-sm animate-pulse">
+                Cargando experiencia
+            </p>
+            <div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+        </div>
+    </div>
+</div>
 <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 w-full pointer-events-none">
 <div class="pointer-events-auto glass-panel rounded-full px-6 py-3 flex items-center justify-between gap-8 md:gap-12 transition-all duration-300 hover:bg-white/40 dark:hover:bg-black/40">
 <a class="hidden md:block text-sm font-semibold tracking-wide hover:text-primary transition-colors text-deep-forest dark:text-white" href="#inicio">INICIO</a>
@@ -154,7 +190,7 @@
 <header class="relative h-screen w-full flex items-center justify-center overflow-hidden" id="inicio">
 <div class="absolute inset-0 z-0">
 <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 z-10"></div>
-<img alt="Villa Laura Exterior" class="w-full h-full object-cover scale-105" data-alt="Sunny day at a welcoming villa with pool and green areas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx1mU5ybh5bLbCXenYKJC8FTiuUGq5TLS6xqU5TsM_6m8Yydwwu6xmcDDDs_v3g0fFo51crcHZ8ImZ9qJ7cT0T3LLJZuC6EEwtR85Pefbaoc2YV_bWLusk-v8dwuZpl_-droyvuapFRRBzRaiN8W30RBs37jh46M1AE2XTt6d1Mm6GW653xv9im8m0orfNTW1lphMnF_OiBIMZKN6INaozV3yuAdvrrnJeUz5kT3ZBWQwkFsbIcA6hxqhrTEDAEZaNQ6fzNmwrlY0j" style="animation: zoom 20s infinite alternate;"/>
+<img alt="Villa Laura Exterior" class="w-full h-full object-cover scale-105" data-alt="Sunny day at a welcoming villa with pool and green areas" src="https://i.ibb.co/XfhLp6fG/Gemini-Generated-Image-m2ftyxm2ftyxm2ft-1.png" style="animation: zoom 20s infinite alternate;"/>
 </div>
 <div class="relative z-20 text-center px-4 flex flex-col items-center gap-6 mt-16 max-w-5xl">
 <div class="glass-panel px-8 py-3 rounded-full animate-fade-in-up">
@@ -585,6 +621,15 @@ function enviarReservaWhatsApp(event) {
     // 5. Redirección
     window.open(whatsappUrl, '_blank');
 }
+// LÓGICA DEL PRELOADER EXPERIENCIAL
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const preloader = document.getElementById('experiencia-preloader');
+        preloader.classList.add('preloader-hidden');
+        document.body.classList.remove('cargando');
+        setTimeout(() => { preloader.remove(); }, 1000);
+    }, 2500); 
+});
 </script>
 </div>
 </section>
