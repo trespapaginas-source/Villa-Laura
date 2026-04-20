@@ -236,6 +236,19 @@
             color: #2c2c2c !important; /* Texto siempre oscuro para legibilidad */
             box-shadow: none !important;
         }
+
+        /* LEO: ESTILOS ESTRICTOS PARA FECHAS BLOQUEADAS (AIRBNB/GOOGLE) */
+        .calendar-airbnb-style .flatpickr-day.flatpickr-disabled,
+        .calendar-airbnb-style .flatpickr-day.flatpickr-disabled:hover,
+        .calendar-airbnb-style .flatpickr-day.disabled,
+        .calendar-airbnb-style .flatpickr-day.disabled:hover {
+            background: #f3f4f6 !important; /* Fondo gris claro */
+            color: #9ca3af !important; /* Texto gris oscuro */
+            text-decoration: line-through !important; /* Tachado */
+            border-color: transparent !important;
+            cursor: not-allowed !important; /* Cursor de prohibido */
+            opacity: 0.6 !important;
+        }
     </style>
 </head>
 <body class="cargando bg-gradient-premium-light dark:bg-gradient-premium-dark font-display text-deep-forest dark:text-background-light antialiased selection:bg-primary selection:text-white overflow-x-hidden">
@@ -801,24 +814,25 @@
             }
         }, 2000);
 
-        // 2. Lógica del Backend Intermedio (Serverless Proxy)
-        const urlICS = 'Https://calendar.google.com/calendar/ical/villalaura.reservas%40gmail.com/private-2fed8f5923fbee9dc06413880a7fc646/basic.ics'; 
-        const proxyServerless = `https://api.allorigins.win/get?url=${encodeURIComponent(urlICS)}`;
+        // LEO: ENLACES CORREGIDOS (H minúscula)
+        const urlGoogle = 'https://calendar.google.com/calendar/ical/villalaura.reservas%40gmail.com/private-2fed8f5923fbee9dc06413880a7fc646/basic.ics'; 
+        const urlAirbnb = 'https://www.airbnb.com.co/calendar/ical/1605526278553027700.ics?t=22297d8166434d8d8a0842f03a98b365'; 
 
-        let fechasBloqueadas = [];
+        // Variables globales para los calendarios
+        let flatpickrInline, flatpickrForm;
 
-        // 3. Inicializar AMBOS Calendarios
-        function initCalendars(disabledDates) {
+        // 2. INICIALIZACIÓN INSTANTÁNEA (Resuelve el problema de la pantalla en blanco)
+        function iniciarCalendariosVacios() {
             const configBase = {
                 mode: "range",
                 minDate: "today",
                 locale: "es",
                 dateFormat: "d/m/Y",
-                disable: disabledDates,
-                showMonths: 1, // LEO: Fijo a 1 solo mes siempre para mantener el diseño impecable y evitar desbordamientos
+                showMonths: 1, // 1 solo mes para que no se desborde
+                disable: [] // Arrancamos sin bloqueos para cargar instantáneo
             };
 
-            // ---> CALENDARIO 1: INLINE (Siempre visible)
+            // Calendario 1: Inline
             const inlineCalendar = document.getElementById('inlineCalendar');
             const btnInline = document.getElementById('btnInlineQuote');
             const lblCheckin = document.getElementById('lblCheckin');
@@ -826,7 +840,7 @@
             let inlineDatesStr = "";
 
             if(inlineCalendar) {
-                flatpickr(inlineCalendar, {
+                flatpickrInline = flatpickr(inlineCalendar, {
                     ...configBase,
                     inline: true,
                     onChange: function(selectedDates, dateStr, instance) {
@@ -834,7 +848,6 @@
                             inlineDatesStr = dateStr;
                             lblCheckin.innerText = instance.formatDate(selectedDates[0], "d/m/Y");
                             lblCheckout.innerText = instance.formatDate(selectedDates[1], "d/m/Y");
-                            
                             btnInline.disabled = false;
                             btnInline.innerHTML = `<span class="material-symbols-outlined">whatsapp</span> Cotizar Estadía`;
                         } else {
@@ -846,20 +859,19 @@
                     }
                 });
 
-                // Enviar WhatsApp desde el botón Inline
                 btnInline.addEventListener('click', () => {
                     const mensaje = `Hola, he visto la disponibilidad en la página y quiero cotizar una estadía para las fechas: *${inlineDatesStr}*.`;
                     window.open(`https://wa.me/573042718569?text=${encodeURIComponent(mensaje)}`, '_blank');
                 });
             }
 
-            // ---> CALENDARIO 2: Formulario Completo de Contacto (Footer)
+            // Calendario 2: Formulario Inferior
             const formCalendar = document.getElementById('fechaCalendario');
             const btnForm = document.getElementById('btnSubmitForm');
             const warning = document.getElementById('form-warning');
             
             if(formCalendar) {
-                flatpickr(formCalendar, {
+                flatpickrForm = flatpickr(formCalendar, {
                     ...configBase,
                     onChange: function(selectedDates, dateStr) {
                         if (selectedDates.length === 2) {
@@ -875,81 +887,127 @@
             }
         }
 
-        // 4. MOTOR DE SINCRONIZACIÓN DUAL (Google Calendar + Airbnb -> Web)
-        async function cargarFechasICS() {
-            
-            // LEO: PEGA TUS ENLACES AQUÍ ABAJO ENTRE LAS COMILLAS
-            const urlGoogle = 'Https://calendar.google.com/calendar/ical/villalaura.reservas%40gmail.com/private-2fed8f5923fbee9dc06413880a7fc646/basic.ics'; 
-            const urlAirbnb = 'https://www.airbnb.com.co/calendar/ical/1605526278553027700.ics?t=22297d8166434d8d8a0842f03a98b365'; 
+        // Llamamos a la función inmediatamente al cargar la página
+        iniciarCalendariosVacios();
 
-            // Creamos una lista con los enlaces que no estén vacíos
-            const enlaces = [urlGoogle, urlAirbnb].filter(link => link && link.startsWith('http'));
+        // 3. SINCRONIZACIÓN EN SEGUNDO PLANO (Google + Airbnb)
+        async function sincronizarFechas() {
+            const enlaces = [urlGoogle, urlAirbnb];
 
-            if (enlaces.length === 0) {
-                console.warn("⚠️ Sincronización inactiva: No hay enlaces configurados.");
-                initCalendars([]); 
-                return;
+            function parsearFechaICS(linea) {
+                const m = linea.match(/(\d{4})(\d{2})(\d{2})/);
+                return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
             }
 
-            let todasLasFechas = [];
-
-            // Función interna para procesar cada calendario
-            async function procesarCalendario(url) {
-                try {
-                    const cacheBuster = `&t=${new Date().getTime()}`;
-                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}${cacheBuster}`;
-                    
-                    const response = await fetch(proxyUrl);
-                    const json = await response.json();
-                    const data = json.contents;
-                    
-                    const eventosEncontrados = [];
-                    const lineas = data.split(/\r?\n/);
-                    let eventoActual = {};
-
-                    lineas.forEach(linea => {
-                        if (linea.startsWith('DTSTART')) {
-                            const match = linea.match(/(\d{4})(\d{2})(\d{2})/);
-                            if (match) eventoActual.from = `${match[1]}-${match[2]}-${match[3]}`;
-                        }
-                        if (linea.startsWith('DTEND')) {
-                            const match = linea.match(/(\d{4})(\d{2})(\d{2})/);
-                            if (match) {
-                                // Ajuste de fecha para Google/Airbnb (Día de salida)
-                                let d = new Date(match[1], match[2] - 1, match[3]);
-                                d.setDate(d.getDate() - 1);
-                                const yyyy = d.getFullYear();
-                                const mm = String(d.getMonth() + 1).padStart(2, '0');
-                                const dd = String(d.getDate()).padStart(2, '0');
-                                eventoActual.to = `${yyyy}-${mm}-${dd}`;
-                                eventosEncontrados.push({...eventoActual});
-                                eventoActual = {};
-                            }
-                        }
-                    });
-                    return eventosEncontrados;
-                } catch (e) {
-                    console.error("Error procesando un calendario:", e);
-                    return [];
+            // Genera objetos Date a las 12:00 locales (evita bugs de DST)
+            function expandirRango(startStr, endStr) {
+                const dates = [];
+                const start = new Date(startStr + 'T12:00:00');
+                const end   = new Date(endStr   + 'T12:00:00');
+                if (isNaN(start) || isNaN(end) || start > end) return dates;
+                const cursor = new Date(start);
+                let guard = 0;
+                while (cursor <= end && guard < 366) {
+                    dates.push(new Date(cursor));
+                    cursor.setDate(cursor.getDate() + 1);
+                    guard++;
                 }
+                return dates;
             }
 
-            // Ejecutamos la carga de todos los calendarios en paralelo para ganar velocidad
+            async function fetchICS(url) {
+                const intentos = [
+                    async () => {
+                        const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}&t=${Date.now()}`);
+                        if (!r.ok) return null;
+                        return (await r.json()).contents;
+                    },
+                    async () => {
+                        const r = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(url)}`);
+                        return r.ok ? r.text() : null;
+                    },
+                    async () => {
+                        const r = await fetch(`https://thingproxy.freeboard.io/fetch/${url}`);
+                        return r.ok ? r.text() : null;
+                    }
+                ];
+                for (const intento of intentos) {
+                    try {
+                        const data = await intento();
+                        if (data && data.includes('BEGIN:VCALENDAR')) return data;
+                    } catch (_) { /* intenta el siguiente proxy */ }
+                }
+                return null;
+            }
+
+            function parsearICS(data) {
+                const resultado = [];
+                const lineas = data.split(/\r?\n/);
+                let dtstart = null, dtend = null;
+                for (const linea of lineas) {
+                    const l = linea.trim();
+                    if (l.startsWith('DTSTART')) dtstart = parsearFechaICS(l);
+                    if (l.startsWith('DTEND'))   dtend   = parsearFechaICS(l);
+                    if (l === 'END:VEVENT') {
+                        if (dtstart && dtend) {
+                            // iCal spec: DTEND es EXCLUSIVO → último día ocupado = DTEND − 1
+                            const dEnd = new Date(dtend + 'T12:00:00');
+                            dEnd.setDate(dEnd.getDate() - 1);
+                            const endCorregido = dEnd.toISOString().split('T')[0];
+                            if (dtstart <= endCorregido) {
+                                resultado.push(...expandirRango(dtstart, endCorregido));
+                            } else {
+                                // Evento de pocas horas (mismo día) → bloquear solo el día de inicio
+                                resultado.push(new Date(dtstart + 'T12:00:00'));
+                            }
+                        } else if (dtstart) {
+                            resultado.push(new Date(dtstart + 'T12:00:00'));
+                        }
+                        dtstart = null;
+                        dtend   = null;
+                    }
+                }
+                return resultado;
+            }
+
             try {
-                const resultados = await Promise.all(enlaces.map(link => procesarCalendario(link)));
-                // Unimos todos los arrays de fechas en uno solo
-                todasLasFechas = resultados.flat();
-                console.log("✅ Sincronización Dual Exitosa. Total bloqueos:", todasLasFechas.length);
+                const resultados = await Promise.all(
+                    enlaces.map(async url => {
+                        const data = await fetchICS(url);
+                        return data ? parsearICS(data) : [];
+                    })
+                );
+
+                // Deduplicar por clave "YYYY-MM-DD"
+                const vistos = new Set();
+                const fechasUnicas = resultados.flat().filter(d => {
+                    const clave = d.toISOString().split('T')[0];
+                    if (vistos.has(clave)) return false;
+                    vistos.add(clave);
+                    return true;
+                });
+
+                if (fechasUnicas.length > 0) {
+                    [flatpickrInline, flatpickrForm].forEach(fp => {
+                        if (!fp) return;
+                        fp.set('disable', fechasUnicas);
+                        fp.redraw(); // Fuerza repintado visual inmediato
+                    });
+                    console.log(`✅ ${fechasUnicas.length} fechas bloqueadas.`);
+                    console.log('📅', [...vistos].sort());
+                } else {
+                    console.warn('⚠️ No se encontraron fechas ocupadas.');
+                }
             } catch (error) {
-                console.error("❌ Error crítico en sincronización dual:", error);
-            } finally {
-                fechasBloqueadas = todasLasFechas;
-                initCalendars(fechasBloqueadas);
+                console.error('❌ Error en sincronización:', error);
             }
         }
 
-        cargarFechasICS();
+        // Ejecutamos la búsqueda de fechas sin frenar la carga de la página
+        sincronizarFechas();
     });
+
+
 
     // 5. Envío del Formulario de Contacto (Formulario de abajo)
     function enviarReservaWhatsApp(event) {
