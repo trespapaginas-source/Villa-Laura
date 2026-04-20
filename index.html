@@ -470,7 +470,7 @@
         </div>
         
         <div class="relative w-full aspect-[3/4] md:aspect-video rounded-3xl overflow-hidden bg-black group border-[4px] border-white shadow-2xl" id="tour-container">
-            <iframe id="vr-tour-iframe" class="absolute inset-0 w-full h-full z-0" src="https://tour.panoee.net/697950dfe479ca135fc79bc1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <iframe id="vr-tour-iframe" class="absolute inset-0 w-full h-full z-0" src="https://0fa32ed2.tour-villa-laura.pages.dev" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
             <div id="tour-curtain" class="absolute inset-0 z-10 flex items-center justify-center cursor-pointer transition-all duration-1000 bg-black/40 backdrop-blur-[6px] hover:backdrop-blur-[3px] hover:bg-black/20" onclick="startExperience()">
                 <div class="group/btn relative flex flex-col items-center gap-4 transition-all duration-300 group-hover:scale-105">
@@ -802,7 +802,7 @@
         }, 2000);
 
         // 2. Lógica del Backend Intermedio (Serverless Proxy)
-        const urlICS = 'AQUI_EL_LINK_ICS_DE_GOOGLE_DEL_CLIENTE'; 
+        const urlICS = 'Https://calendar.google.com/calendar/ical/villalaura.reservas%40gmail.com/private-2fed8f5923fbee9dc06413880a7fc646/basic.ics'; 
         const proxyServerless = `https://api.allorigins.win/get?url=${encodeURIComponent(urlICS)}`;
 
         let fechasBloqueadas = [];
@@ -875,43 +875,75 @@
             }
         }
 
-        // 4. Única petición al Backend (Rendimiento optimizado)
+        // 4. MOTOR DE SINCRONIZACIÓN DUAL (Google Calendar + Airbnb -> Web)
         async function cargarFechasICS() {
-            try {
-                if(urlICS === 'AQUI_EL_LINK_ICS_DE_GOOGLE_DEL_CLIENTE') {
-                    console.log("Esperando link del cliente para activar sincronización.");
-                    initCalendars([]); // Inicia vacío si no hay link
-                    return;
-                }
+            
+            // LEO: PEGA TUS ENLACES AQUÍ ABAJO ENTRE LAS COMILLAS
+            const urlGoogle = 'Https://calendar.google.com/calendar/ical/villalaura.reservas%40gmail.com/private-2fed8f5923fbee9dc06413880a7fc646/basic.ics'; 
+            const urlAirbnb = 'https://www.airbnb.com.co/calendar/ical/1605526278553027700.ics?t=22297d8166434d8d8a0842f03a98b365'; 
 
-                // 1 solo llamado al servidor
-                const response = await fetch(proxyServerless);
-                const dataRaw = await response.json();
-                const data = dataRaw.contents; 
-                
-                let tempFechas = [];
-                let actual = {};
-                
-                data.split('\n').forEach(linea => {
-                    if (linea.startsWith('DTSTART')) {
-                        let match = linea.match(/(\d{4})(\d{2})(\d{2})/);
-                        if(match) actual.from = `${match[1]}-${match[2]}-${match[3]}`;
-                    }
-                    if (linea.startsWith('DTEND')) {
-                        let match = linea.match(/(\d{4})(\d{2})(\d{2})/);
-                        if(match) {
-                            actual.to = `${match[1]}-${match[2]}-${match[3]}`;
-                            tempFechas.push({...actual});
-                            actual = {};
+            // Creamos una lista con los enlaces que no estén vacíos
+            const enlaces = [urlGoogle, urlAirbnb].filter(link => link && link.startsWith('http'));
+
+            if (enlaces.length === 0) {
+                console.warn("⚠️ Sincronización inactiva: No hay enlaces configurados.");
+                initCalendars([]); 
+                return;
+            }
+
+            let todasLasFechas = [];
+
+            // Función interna para procesar cada calendario
+            async function procesarCalendario(url) {
+                try {
+                    const cacheBuster = `&t=${new Date().getTime()}`;
+                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}${cacheBuster}`;
+                    
+                    const response = await fetch(proxyUrl);
+                    const json = await response.json();
+                    const data = json.contents;
+                    
+                    const eventosEncontrados = [];
+                    const lineas = data.split(/\r?\n/);
+                    let eventoActual = {};
+
+                    lineas.forEach(linea => {
+                        if (linea.startsWith('DTSTART')) {
+                            const match = linea.match(/(\d{4})(\d{2})(\d{2})/);
+                            if (match) eventoActual.from = `${match[1]}-${match[2]}-${match[3]}`;
                         }
-                    }
-                });
-                
-                if(tempFechas.length > 0) fechasBloqueadas = tempFechas;
-                
-            } catch(e) {
-                console.log("Error al consultar el backend. Intentando fallback.", e.message);
+                        if (linea.startsWith('DTEND')) {
+                            const match = linea.match(/(\d{4})(\d{2})(\d{2})/);
+                            if (match) {
+                                // Ajuste de fecha para Google/Airbnb (Día de salida)
+                                let d = new Date(match[1], match[2] - 1, match[3]);
+                                d.setDate(d.getDate() - 1);
+                                const yyyy = d.getFullYear();
+                                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                                const dd = String(d.getDate()).padStart(2, '0');
+                                eventoActual.to = `${yyyy}-${mm}-${dd}`;
+                                eventosEncontrados.push({...eventoActual});
+                                eventoActual = {};
+                            }
+                        }
+                    });
+                    return eventosEncontrados;
+                } catch (e) {
+                    console.error("Error procesando un calendario:", e);
+                    return [];
+                }
+            }
+
+            // Ejecutamos la carga de todos los calendarios en paralelo para ganar velocidad
+            try {
+                const resultados = await Promise.all(enlaces.map(link => procesarCalendario(link)));
+                // Unimos todos los arrays de fechas en uno solo
+                todasLasFechas = resultados.flat();
+                console.log("✅ Sincronización Dual Exitosa. Total bloqueos:", todasLasFechas.length);
+            } catch (error) {
+                console.error("❌ Error crítico en sincronización dual:", error);
             } finally {
+                fechasBloqueadas = todasLasFechas;
                 initCalendars(fechasBloqueadas);
             }
         }
